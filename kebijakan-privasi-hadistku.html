@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kebijakan Privasi - HaditsKu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="website icon" type="png" href="alquran.png">
+    <style>
+        :root {
+            --primary: #0d6e6e;
+            --primary-light: rgba(13, 110, 110, 0.1);
+            --primary-dark: #0a4f4f;
+            --secondary: #d6ccb5;
+            --accent: #f5c361;
+            --dark: #1e2a3a;
+            --light: #f8f8f6;
+            --gray: #718096;
+            --arabic-font: 'Amiri', serif;
+            
+            /* Dark mode variables */
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #e0e0e0;
+            --dark-border: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            padding-bottom: 80px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        /* Modern Glassmorphism Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode .glass-card {
+            background: rgba(30, 30, 30, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode .header {
+            background-color: rgba(30, 30, 30, 0.92);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.6rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover .logo-icon {
+            transform: scale(1.1);
+        }
+
+        .logo-text h1 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-right: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-light);
+            transform: translateX(-3px);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.2rem;
+            margin-left: auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        body.dark-mode .theme-toggle {
+            color: var(--dark-text);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--primary-light);
+            transform: scale(1.1) rotate(15deg);
+            color: var(--accent);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Modern Page Header */
+        .page-header {
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            border-radius: 4px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-subtitle {
+            color: var(--gray);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        body.dark-mode .page-subtitle {
+            color: #CBD5E0;
+        }
+
+        /* Privacy Policy Content */
+        .privacy-content {
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 1.1rem;
+        }
+
+        .section-content {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.7;
+            padding-left: 15px;
+        }
+
+        body.dark-mode .section-content {
+            color: #CBD5E0;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .section-content li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background-color: var(--primary-light);
+            border-left: 3px solid var(--primary);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        body.dark-mode .highlight-box {
+            background-color: rgba(13, 110, 110, 0.15);
+        }
+
+        /* Bottom Navigation - Modern with Hide/Show on Scroll */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-radius: 20px;
+            box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.1);
+            z-index: 90;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        body.dark-mode .bottom-nav {
+            background-color: rgba(30, 30, 30, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .bottom-nav.hidden {
+            transform: translateX(-50%) translateY(120%);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.8rem;
+            padding: 8px 12px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background-color: var(--primary-light);
+            transform: translateY(-8px);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .nav-item:not(.active):hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 20px 15px;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            .bottom-nav {
+                width: calc(100% - 20px);
+                padding: 10px 0;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade {
+            animation: fadeIn 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Header with Glass Effect -->
+    <header class="header glass-card">
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="logo">
+            <i class="fas fa-mosque logo-icon"></i>
+            <div class="logo-text">
+                <h1>HaditsKu</h1>
+            </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Modern Page Header -->
+        <div class="page-header animate-fade" style="animation-delay: 0.1s">
+            <h1 class="page-title">Kebijakan Privasi</h1>
+            <p class="page-subtitle">Terakhir diperbarui: 1 Januari 2025</p>
+        </div>
+
+        <div class="privacy-content">
+            <!-- Introduction Section -->
+            <div class="section glass-card animate-fade" style="animation-delay: 0.2s">
+                <h2 class="section-title"><i class="fas fa-info-circle"></i>Pengantar</h2>
+                <div class="section-content">
+                    <p>Kebijakan Privasi ini menjelaskan bagaimana HaditsKu mengumpulkan, menggunakan, dan melindungi informasi Anda. Kami berkomitmen untuk melindungi privasi pengguna sambil menyediakan pengalaman terbaik dalam mempelajari hadits.</p>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Dengan menggunakan website HaditsKu, Anda menyetujui praktik yang dijelaskan dalam kebijakan ini.</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Collection Section -->
+            <div class="section glass-card animate-fade" style="animation-delay: 0.3s">
+                <h2 class="section-title"><i class="fas fa-database"></i>Data yang Kami Kumpulkan</h2>
+                <div class="section-content">
+                    <p>Untuk meningkatkan layanan kami, kami mungkin mengumpulkan:</p>
+                    <ul>
+                        <li><strong>Data Penggunaan:</strong> Interaksi Anda dengan fitur aplikasi, preferensi, dan durasi penggunaan</li>
+                        <li><strong>Data Teknis:</strong> Informasi perangkat, sistem operasi, versi aplikasi, dan pengaturan bahasa</li>
+                        <li><strong>Data Lokasi:</strong> Hanya dengan persetujuan Anda, untuk konten yang relevan secara geografis</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Data Usage Section -->
+            <div class="section glass-card animate-fade" style="animation-delay: 0.4s">
+                <h2 class="section-title"><i class="fas fa-cogs"></i>Bagaimana Kami Menggunakan Data</h2>
+                <div class="section-content">
+                    <p>Data yang terkumpul membantu kami dalam:</p>
+                    <ul>
+                        <li>Menyediakan dan memelihara layanan inti</li>
+                        <li>Mengembangkan fitur baru yang relevan</li>
+                        <li>Memperbaiki pengalaman pengguna secara keseluruhan</li>
+                        <li>Memahami pola penggunaan untuk optimasi</li>
+                        <li>Mencegah penyalahgunaan dan masalah teknis</li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <p>Kami <strong>tidak</strong> menjual data Anda kepada pihak ketiga untuk tujuan pemasaran.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Protection Section -->
+            <div class="section glass-card animate-fade" style="animation-delay: 0.5s">
+                <h2 class="section-title"><i class="fas fa-shield-alt"></i>Keamanan Data</h2>
+                <div class="section-content">
+                    <p>Kami menerapkan berbagai langkah keamanan:</p>
+                    <ul>
+                        <li>Enkripsi data dalam transmisi menggunakan TLS</li>
+                        <li>Pembatasan akses berbasis kebutuhan</li>
+                        <li>Audit keamanan berkala</li>
+                        <li>Pembaruan sistem untuk menutup kerentanan</li>
+                    </ul>
+                    <p>Meskipun kami berusaha keras melindungi data Anda, tidak ada sistem yang 100% aman di internet.</p>
+                </div>
+            </div>
+
+            <!-- Third Party Section -->
+            <div class="section glass-card animate-fade" style="animation-delay: 0.6s">
+                <h2 class="section-title"><i class="fas fa-external-link-alt"></i>Layanan Pihak Ketiga</h2>
+                <div class="section-content">
+                    <p>Kami menggunakan beberapa layanan pihak ketiga terpercaya:</p>
+                    <ul>
+                        <li><strong>Google Analytics:</strong> Untuk analisis penggunaan aplikasi</li>
+                        <li><strong>Firebase:</strong> Untuk penyimpanan data dan autentikasi</li>
+                        <li><strong>AdMob:</strong> Untuk menampilkan iklan yang mendukung pengembangan</li>
+                    </ul>
+                    <p>Setiap penyedia memiliki kebijakan privasi sendiri yang mengatur data mereka.</p>
+                </div>
+            </div>
+
+            <!-- Changes Section -->
+            <div class="section glass-card animate-fade" style="animation-delay: 0.7s">
+                <h2 class="section-title"><i class="fas fa-sync-alt"></i>Perubahan Kebijakan</h2>
+                <div class="section-content">
+                    <p>Kebijakan ini mungkin diperbarui seiring perkembangan aplikasi:</p>
+                    <ul>
+                        <li>Perubahan signifikan akan diberitahukan melalui aplikasi</li>
+                        <li>Versi terbaru selalu tersedia di halaman ini</li>
+                        <li>Penggunaan berkelanjutan berarti penerimaan kebijakan baru</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="section glass-card animate-fade" style="animation-delay: 0.8s">
+                <h2 class="section-title"><i class="fas fa-envelope"></i>Kontak Kami</h2>
+                <div class="section-content">
+                    <p>Untuk pertanyaan tentang privasi, hubungi:</p>
+                    <ul>
+                        <li>Email: <strong>privasi@haditsku.com</strong></li>
+                        <li>Formulir kontak dalam aplikasi</li>
+                        <li>Media sosial resmi HaditsKu</li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <p>Kami berusaha merespons semua pertanyaan dalam waktu 3-5 hari kerja.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright animate-fade" style="animation-delay: 0.9s">
+            <p>&copy; <span id="year"></span> HaditsKu. All rights reserved.</p>
+        </div>
+    </main>
+
+    <!-- Modern Bottom Navigation with Hide/Show on Scroll -->
+    <nav class="bottom-nav" id="bottomNav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </a>
+        <a href="kitab-hadist.html" class="nav-item">
+            <i class="fas fa-book"></i>
+            <span>Kitab</span>
+        </a>
+        <a href="favorite-hadist.html" class="nav-item">
+            <i class="fas fa-heart"></i>
+            <span>Favorit</span>
+        </a>
+        <a href="profil-hadist.html" class="nav-item active">
+            <i class="fas fa-user"></i>
+            <span>Profil</span>
+        </a>
+    </nav>
+
+    <script>
+        // Modern Theme Toggle
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const icon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                // Smooth transition
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                    
+                    // Add animation
+                    themeToggle.animate([
+                        { transform: 'rotate(0deg)' },
+                        { transform: 'rotate(360deg)' }
+                    ], {
+                        duration: 500,
+                        easing: 'ease-in-out'
+                    });
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                    
+                    // Add animation
+                    themeToggle.animate([
+                        { transform: 'rotate(0deg)' },
+                        { transform: 'rotate(360deg)' }
+                    ], {
+                        duration: 500,
+                        easing: 'ease-in-out'
+                    });
+                }
+            });
+        }
+
+        // Modern Bottom Navigation
+        function setupBottomNav() {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Add ripple effect
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple-effect');
+                    this.appendChild(ripple);
+                    
+                    // Remove ripple after animation
+                    setTimeout(() => {
+                        ripple.remove();
+                        const target = this.getAttribute('href');
+                        if (target && target !== "#") {
+                            window.location.href = target;
+                        }
+                    }, 500);
+                });
+            });
+        }
+
+        // Hide/Show Footer on Scroll
+        function setupScrollBehavior() {
+            const bottomNav = document.getElementById('bottomNav');
+            let lastScrollPosition = 0;
+            let ticking = false;
+            
+            window.addEventListener('scroll', function() {
+                const currentScrollPosition = window.pageYOffset;
+                
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        if (currentScrollPosition > lastScrollPosition && currentScrollPosition > 100) {
+                            // Scrolling down
+                            bottomNav.classList.add('hidden');
+                        } else {
+                            // Scrolling up
+                            bottomNav.classList.remove('hidden');
+                        }
+                        lastScrollPosition = currentScrollPosition;
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            setupThemeToggle();
+            setupBottomNav();
+            setupScrollBehavior();
+            
+            // Set copyright year
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>

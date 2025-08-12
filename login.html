@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HaditsKu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="website icon" type="png" href="alquran.png">
+    <style>
+        :root {
+            --primary: #0d6e6e;
+            --primary-light: rgba(13, 110, 110, 0.1);
+            --primary-dark: #0a4f4f;
+            --secondary: #d6ccb5;
+            --accent: #f5c361;
+            --error: #e74c3c;
+            --success: #2ecc71;
+            --dark: #1e2a3a;
+            --light: #f8f8f6;
+            --gray: #718096;
+            --arabic-font: 'Amiri', serif;
+            
+            /* Dark mode variables */
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #e0e0e0;
+            --dark-border: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        /* Login Container */
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 2rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-header p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        /* Login Form */
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode .login-form {
+            background-color: var(--dark-card);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .form-control {
+            background-color: var(--dark-bg);
+            border-color: var(--dark-border);
+            color: var(--dark-text);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-light);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary);
+        }
+
+        /* Security Indicators */
+        .security-indicator {
+            height: 4px;
+            background-color: #e0e0e0;
+            border-radius: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .security-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--error);
+            transition: all 0.3s ease;
+        }
+
+        .security-message {
+            font-size: 0.75rem;
+            margin-top: 5px;
+            color: var(--gray);
+            min-height: 18px;
+        }
+
+        /* Remember & Forgot */
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .remember-me input {
+            accent-color: var(--primary);
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        /* Submit Button */
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(13, 110, 110, 0.3);
+        }
+
+        .login-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .divider::before {
+            margin-right: 10px;
+        }
+
+        .divider::after {
+            margin-left: 10px;
+        }
+
+        /* Social Login */
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border: 1px solid rgba(0,0,0,0.1);
+            color: var(--dark);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .social-btn {
+            background-color: var(--dark-bg);
+            border-color: var(--dark-border);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .social-btn.google {
+            color: #DB4437;
+        }
+
+        .social-btn.facebook {
+            color: #4267B2;
+        }
+
+        .social-btn.apple {
+            color: var(--dark);
+        }
+
+        /* Register Link */
+        .register-link {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .register-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        body.dark-mode .theme-toggle {
+            color: var(--dark-text);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            color: var(--accent);
+        }
+
+        /* Error Message */
+        .error-message {
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Captcha */
+        .captcha-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            background-color: var(--primary-light);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .captcha-text {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            background-color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            user-select: none;
+        }
+
+        .refresh-captcha {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-captcha:hover {
+            transform: rotate(90deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-form {
+                padding: 25px 20px;
+            }
+            
+            .login-header {
+                margin-bottom: 30px;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <!-- Login Header -->
+        <div class="login-header">
+            <div class="logo">
+                <i class="fas fa-mosque logo-icon"></i>
+                <div class="logo-text">
+                    <h1>HaditsKu</h1>
+                </div>
+            </div>
+            <p>Masuk untuk mengakses koleksi hadits digital terlengkap</p>
+        </div>
+
+        <!-- Login Form -->
+        <form class="login-form" id="loginForm">
+            <!-- Email Input -->
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <div class="input-group">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="email" class="form-control" placeholder="Masukkan email Anda" required>
+                </div>
+                <div class="error-message" id="emailError">Email tidak valid</div>
+            </div>
+
+            <!-- Password Input -->
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" class="form-control" placeholder="Masukkan password Anda" required>
+                    <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                </div>
+                <div class="security-indicator">
+                    <div class="security-bar" id="securityBar"></div>
+                </div>
+                <div class="security-message" id="securityMessage"></div>
+                <div class="error-message" id="passwordError">Password harus minimal 8 karakter</div>
+            </div>
+
+            <!-- CAPTCHA -->
+            <div class="form-group">
+                <div class="captcha-container">
+                    <div class="captcha-text" id="captchaText">A7B9C3</div>
+                    <button type="button" class="refresh-captcha" id="refreshCaptcha">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <input type="text" id="captchaInput" class="form-control" placeholder="Masukkan CAPTCHA" required style="padding-left: 15px; flex: 1;">
+                </div>
+                <div class="error-message" id="captchaError">CAPTCHA tidak valid</div>
+            </div>
+
+            <!-- Remember & Forgot -->
+            <div class="remember-forgot">
+                <label class="remember-me">
+                    <input type="checkbox" id="rememberMe">
+                    Ingat saya
+                </label>
+                <a href="#" class="forgot-password" id="forgotPassword">Lupa password?</a>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="login-btn" id="loginBtn" disabled>
+                <span id="btnText">Masuk</span>
+                <span id="btnLoader" style="display: none;">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </span>
+            </button>
+
+            <!-- Divider -->
+            <div class="divider">atau masuk dengan</div>
+
+            <!-- Social Login -->
+            <div class="social-login">
+                <button type="button" class="social-btn google">
+                    <i class="fab fa-google"></i>
+                </button>
+                <button type="button" class="social-btn facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button type="button" class="social-btn apple">
+                    <i class="fab fa-apple"></i>
+                </button>
+            </div>
+
+            <!-- Register Link -->
+            <div class="register-link">
+                Belum punya akun? <a href="register.html">Daftar sekarang</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // DOM Elements
+        const themeToggle = document.getElementById('themeToggle');
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const rememberMe = document.getElementById('rememberMe');
+        const loginBtn = document.getElementById('loginBtn');
+        const btnText = document.getElementById('btnText');
+        const btnLoader = document.getElementById('btnLoader');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const securityBar = document.getElementById('securityBar');
+        const securityMessage = document.getElementById('securityMessage');
+        const captchaText = document.getElementById('captchaText');
+        const captchaInput = document.getElementById('captchaInput');
+        const refreshCaptcha = document.getElementById('refreshCaptcha');
+        const captchaError = document.getElementById('captchaError');
+        const forgotPassword = document.getElementById('forgotPassword');
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        // Theme toggle
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // Toggle password visibility
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // Password strength checker
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+            let message = '';
+            let color = '';
+            
+            // Check length
+            if (password.length > 0) strength += 1;
+            if (password.length >= 8) strength += 1;
+            
+            // Check complexity
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/[0-9]/.test(password)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+            
+            // Determine strength level
+            switch(strength) {
+                case 0:
+                    message = '';
+                    color = 'transparent';
+                    break;
+                case 1:
+                case 2:
+                    message = 'Lemah';
+                    color = 'var(--error)';
+                    break;
+                case 3:
+                    message = 'Sedang';
+                    color = 'var(--accent)';
+                    break;
+                case 4:
+                case 5:
+                    message = 'Kuat';
+                    color = 'var(--success)';
+                    break;
+            }
+            
+            // Update UI
+            securityBar.style.width = `${strength * 20}%`;
+            securityBar.style.backgroundColor = color;
+            securityMessage.textContent = message;
+            securityMessage.style.color = color;
+            
+            // Enable/disable button based on password strength
+            loginBtn.disabled = strength < 3 || !emailInput.value || !captchaInput.value;
+        });
+
+        // Email validation
+        emailInput.addEventListener('input', function() {
+            const email = this.value;
+            const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            
+            if (email && !isValid) {
+                emailError.style.display = 'block';
+            } else {
+                emailError.style.display = 'none';
+            }
+            
+            // Enable/disable button
+            loginBtn.disabled = !isValid || !passwordInput.value || !captchaInput.value;
+        });
+
+        // CAPTCHA generation
+        function generateCaptcha() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+            let captcha = '';
+            for (let i = 0; i < 6; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            captchaText.textContent = captcha;
+            return captcha;
+        }
+
+        let currentCaptcha = generateCaptcha();
+
+        // Refresh CAPTCHA
+        refreshCaptcha.addEventListener('click', function() {
+            currentCaptcha = generateCaptcha();
+            captchaInput.value = '';
+            captchaError.style.display = 'none';
+            loginBtn.disabled = true;
+        });
+
+        // CAPTCHA validation
+        captchaInput.addEventListener('input', function() {
+            if (this.value) {
+                captchaError.style.display = 'none';
+                loginBtn.disabled = !emailInput.value || !passwordInput.value;
+            } else {
+                loginBtn.disabled = true;
+            }
+        });
+
+        // Form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate CAPTCHA
+            if (captchaInput.value !== currentCaptcha) {
+                captchaError.style.display = 'block';
+                currentCaptcha = generateCaptcha();
+                captchaInput.value = '';
+                return;
+            }
+            
+            // Validate email
+            const email = emailInput.value;
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                emailError.style.display = 'block';
+                return;
+            }
+            
+            // Validate password
+            const password = passwordInput.value;
+            if (password.length < 8) {
+                passwordError.style.display = 'block';
+                return;
+            }
+            
+            // Simulate login process
+            btnText.style.display = 'none';
+            btnLoader.style.display = 'inline-block';
+            loginBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // In a real app, you would send this to your server
+                console.log('Login attempt with:', { email, password });
+                
+                // For demo purposes, we'll assume login is successful
+                // Save to localStorage if "Remember me" is checked
+                if (rememberMe.checked) {
+                    localStorage.setItem('rememberedEmail', email);
+                } else {
+                    localStorage.removeItem('rememberedEmail');
+                }
+                
+                // Redirect to main page
+                window.location.href = 'index.html';
+            }, 1500);
+        });
+
+        // Forgot password
+        forgotPassword.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Fitur reset password akan mengirim link ke email Anda');
+        });
+
+        // Check for remembered email
+        window.addEventListener('DOMContentLoaded', function() {
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            if (rememberedEmail) {
+                emailInput.value = rememberedEmail;
+                rememberMe.checked = true;
+            }
+            
+            // Set copyright year
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+
+        // Social login handlers
+        document.querySelectorAll('.social-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const provider = this.classList.contains('google') ? 'Google' : 
+                                this.classList.contains('facebook') ? 'Facebook' : 'Apple';
+                alert(`Anda akan login dengan ${provider}`);
+            });
+        });
+    </script>
+</body>
+</html>

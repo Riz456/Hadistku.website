@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorit - HaditsKu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="website icon" type="png" href="alquran.png">
+    <style>
+        :root {
+            --primary: #0d6e6e;
+            --primary-light: rgba(13, 110, 110, 0.1);
+            --primary-dark: #0a4f4f;
+            --secondary: #d6ccb5;
+            --accent: #f5c361;
+            --dark: #1e2a3a;
+            --light: #f8f8f6;
+            --gray: #718096;
+            --arabic-font: 'Amiri', serif;
+            --error: #e74c3c;
+            --success: #2ecc71;
+            
+            /* Dark mode variables */
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #e0e0e0;
+            --dark-border: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            padding-bottom: 60px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode .header {
+            background-color: var(--dark-card);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover .logo-icon {
+            transform: scale(1.1);
+        }
+
+        .logo-text h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-3px);
+        }
+
+        .page-title {
+            flex: 1;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        body.dark-mode .page-title {
+            color: var(--secondary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.1rem;
+            margin-left: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .theme-toggle {
+            color: var(--dark-text);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            color: var(--accent);
+        }
+
+        /* Selection Controls */
+        .selection-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: var(--primary-light);
+            margin-bottom: 15px;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        body.dark-mode .selection-controls {
+            background-color: var(--dark-card);
+            border: 1px solid var(--dark-border);
+        }
+
+        .selection-info {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        body.dark-mode .selection-info {
+            color: var(--secondary);
+        }
+
+        .selection-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .selection-btn {
+            background: none;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .select-all-btn {
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .select-all-btn:hover {
+            background-color: var(--primary-light);
+        }
+
+        .delete-selected-btn {
+            background-color: var(--error);
+            color: white;
+        }
+
+        .delete-selected-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .cancel-selection-btn {
+            color: var(--gray);
+            border: 1px solid var(--gray);
+        }
+
+        .cancel-selection-btn:hover {
+            background-color: rgba(113, 128, 150, 0.1);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 15px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Favorit List */
+        .favorit-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .favorit-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0,0,0,0.05);
+            animation: fadeIn 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .favorit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
+        }
+
+        body.dark-mode .favorit-card {
+            background-color: var(--dark-card);
+            border-color: var(--dark-border);
+        }
+
+        .favorit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .favorit-card.selected {
+            background-color: var(--primary-light);
+            border: 1px solid var(--primary);
+        }
+
+        body.dark-mode .favorit-card.selected {
+            background-color: rgba(13, 110, 110, 0.3);
+        }
+
+        .favorit-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .favorit-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .favorit-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .favorit-card:hover .favorit-icon {
+            transform: scale(1.1);
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .favorit-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .favorit-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode .favorit-title {
+            color: var(--dark-text);
+        }
+
+        .favorit-kitab {
+            font-size: 0.85rem;
+            color: var(--gray);
+            transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        body.dark-mode .favorit-kitab {
+            color: #CBD5E0;
+        }
+
+        .favorit-content {
+            font-family: var(--arabic-font);
+            font-size: 1.5rem;
+            text-align: right;
+            line-height: 1.8;
+            margin: 10px 0;
+            color: var(--dark);
+        }
+
+        body.dark-mode .favorit-content {
+            color: var(--dark-text);
+        }
+
+        .favorit-translation {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-style: italic;
+            margin-top: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .favorit-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .favorit-date {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .favorit-remove {
+            background: none;
+            border: none;
+            color: var(--error);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .favorit-remove:hover {
+            transform: scale(1.05);
+            color: #c0392b;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .empty-text {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .empty-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .empty-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.08);
+            z-index: 90;
+            transform: translateY(0);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode .bottom-nav {
+            background-color: var(--dark-card);
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.2);
+        }
+
+        .bottom-nav.hidden {
+            transform: translateY(100%);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.75rem;
+            padding: 5px 10px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background-color: var(--primary-light);
+            transform: translateY(-5px);
+        }
+
+        .nav-item:not(.active):hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active i {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* Selection Mode Button */
+        .select-mode-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 95;
+            transition: all 0.3s ease;
+        }
+
+        .select-mode-btn:hover {
+            transform: scale(1.1);
+            background-color: var(--primary-dark);
+        }
+
+        body.dark-mode .select-mode-btn {
+            background-color: var(--primary-dark);
+        }
+
+        .select-mode-btn.selecting {
+            background-color: var(--error);
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background-color: var(--dark-card);
+            color: var(--dark-text);
+            padding: 12px 20px;
+            border-radius: 8px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            opacity: 0;
+            max-width: 90%;
+            width: max-content;
+            pointer-events: none;
+        }
+
+        body.dark-mode .notification {
+            background-color: var(--dark);
+            border: 1px solid var(--dark-border);
+        }
+
+        .notification.show {
+            animation: notificationFadeIn 0.3s ease-out forwards;
+            pointer-events: auto;
+        }
+
+        .notification.hide {
+            animation: notificationFadeOut 0.3s ease-out forwards;
+        }
+
+        .notification-undo {
+            color: var(--accent);
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background-color: rgba(255,255,255,0.1);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .notification-undo:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        @keyframes notificationFadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        @keyframes notificationFadeOut {
+            from { opacity: 1; transform: translateX(-50%) translateY(0); }
+            to { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .favorit-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .favorit-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .notification {
+                max-width: 60%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="page-title">Hadits Favorit</div>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Selection Controls -->
+        <div class="selection-controls" id="selectionControls">
+            <div class="selection-info" id="selectionInfo">0 dipilih</div>
+            <div class="selection-actions">
+                <button class="selection-btn select-all-btn" id="selectAllBtn">Pilih Semua</button>
+                <button class="selection-btn delete-selected-btn" id="deleteSelectedBtn">
+                    <i class="fas fa-trash-alt"></i> Hapus
+                </button>
+                <button class="selection-btn cancel-selection-btn" id="cancelSelectionBtn">Batal</button>
+            </div>
+        </div>
+
+        <div class="favorit-list" id="favoritList">
+            <!-- Daftar favorit akan dimuat di sini -->
+        </div>
+    </main>
+
+    <!-- Selection Mode Button -->
+    <button class="select-mode-btn" id="selectModeBtn" title="Mode pilihan">
+        <i class="fas fa-check-circle"></i>
+    </button>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" id="bottomNav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </a>
+        <a href="kitab-hadist.html" class="nav-item">
+            <i class="fas fa-book"></i>
+            <span>Kitab</span>
+        </a>
+        <a href="favorite-hadist.html" class="nav-item active">
+            <i class="fas fa-heart"></i>
+            <span>Favorit</span>
+        </a>
+        <a href="profil-hadist.html" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profil</span>
+        </a>
+    </nav>
+
+    <script>
+        // State untuk mode seleksi
+        let selectionMode = false;
+        let selectedFavorites = [];
+        let deletedFavorites = null;
+        let notificationTimeout = null;
+
+        // Fungsi untuk mendapatkan data favorit dari localStorage
+        function getFavorites() {
+            const favorites = localStorage.getItem('hadithFavorites');
+            return favorites ? JSON.parse(favorites) : [];
+        }
+
+        // Fungsi untuk merender daftar favorit
+        function renderFavorites() {
+            const container = document.getElementById('favoritList');
+            const favorites = getFavorites();
+            
+            container.innerHTML = '';
+            
+            if (favorites.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-heart-broken"></i>
+                        </div>
+                        <h3 class="empty-text">Yah, kayaknya belum ada hadits yang kamu jadiin favorit nih</h3>
+                        <button class="empty-btn" onclick="window.location.href='kitab-hadist.html'">
+                            <i class="fas fa-book"></i> Jelajahi Kitab Hadits
+                        </button>
+                    </div>
+                `;
+                // Sembunyikan tombol mode seleksi jika tidak ada favorit
+                document.getElementById('selectModeBtn').style.display = 'none';
+                // Pastikan keluar dari mode seleksi
+                exitSelectionMode();
+                return;
+            } else {
+                // Tampilkan tombol mode seleksi jika ada favorit
+                document.getElementById('selectModeBtn').style.display = 'flex';
+            }
+            
+            favorites.forEach((fav, index) => {
+                const card = document.createElement('div');
+                card.className = 'favorit-card';
+                if (selectedFavorites.includes(fav.id)) {
+                    card.classList.add('selected');
+                }
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <div class="favorit-header">
+                        ${selectionMode ? `
+                            <input type="checkbox" class="favorit-checkbox" data-id="${fav.id}" 
+                                ${selectedFavorites.includes(fav.id) ? 'checked' : ''}>
+                        ` : ''}
+                        <div class="favorit-icon" style="background-color: ${fav.color}20; color: ${fav.color}">
+                            <i class="${fav.icon}"></i>
+                        </div>
+                        <div class="favorit-info">
+                            <h3 class="favorit-title">Hadits ${fav.hadithNumber}</h3>
+                            <p class="favorit-kitab">${fav.kitabName} - ${fav.author}</p>
+                        </div>
+                    </div>
+                    <div class="favorit-content">
+                        ${fav.arabicText}
+                    </div>
+                    <div class="favorit-translation">
+                        ${fav.translation}
+                    </div>
+                    <div class="favorit-actions">
+                        <span class="favorit-date">
+                            <i class="far fa-calendar-alt"></i> ${new Date(fav.savedAt).toLocaleDateString()}
+                        </span>
+                        ${selectionMode ? '' : `
+                            <button class="favorit-remove" data-id="${fav.id}">
+                                <i class="fas fa-trash-alt"></i> Hapus
+                            </button>
+                        `}
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            if (selectionMode) {
+                // Tambahkan event listener untuk checkbox
+                document.querySelectorAll('.favorit-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        const id = this.getAttribute('data-id');
+                        if (this.checked) {
+                            if (!selectedFavorites.includes(id)) {
+                                selectedFavorites.push(id);
+                            }
+                        } else {
+                            selectedFavorites = selectedFavorites.filter(favId => favId !== id);
+                        }
+                        updateSelectionInfo();
+                        toggleCardSelection();
+                    });
+                });
+            } else {
+                // Tambahkan event listener untuk tombol hapus
+                document.querySelectorAll('.favorit-remove').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = this.getAttribute('data-id');
+                        removeFavorite(id);
+                    });
+                });
+            }
+        }
+
+        // Fungsi untuk toggle seleksi kartu
+        function toggleCardSelection() {
+            document.querySelectorAll('.favorit-card').forEach(card => {
+                const checkbox = card.querySelector('.favorit-checkbox');
+                if (checkbox && selectedFavorites.includes(checkbox.getAttribute('data-id'))) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+        }
+
+        // Fungsi untuk update info seleksi
+        function updateSelectionInfo() {
+            const selectionInfo = document.getElementById('selectionInfo');
+            const count = selectedFavorites.length;
+            selectionInfo.textContent = `${count} ${count === 1 ? 'dipilih' : 'dipilih'}`;
+        }
+
+        // Fungsi untuk menghapus favorit
+        function removeFavorite(id) {
+            const favorites = getFavorites();
+            const favToDelete = favorites.find(fav => fav.id === id);
+            
+            if (!favToDelete) return;
+            
+            deletedFavorites = {
+                ids: [id],
+                data: [favToDelete]
+            };
+            
+            const updatedFavorites = favorites.filter(fav => fav.id !== id);
+            localStorage.setItem('hadithFavorites', JSON.stringify(updatedFavorites));
+            
+            // Tampilkan notifikasi dengan opsi urungkan
+            showNotificationWithUndo("1 favorit telah dihapus");
+            
+            renderFavorites();
+        }
+
+        // Fungsi untuk menghapus banyak favorit sekaligus
+        function removeSelectedFavorites() {
+            if (selectedFavorites.length === 0) return;
+            
+            const favorites = getFavorites();
+            deletedFavorites = {
+                ids: [...selectedFavorites],
+                data: favorites.filter(fav => selectedFavorites.includes(fav.id))
+            };
+            
+            const updatedFavorites = favorites.filter(fav => !selectedFavorites.includes(fav.id));
+            localStorage.setItem('hadithFavorites', JSON.stringify(updatedFavorites));
+            
+            // Tampilkan notifikasi dengan opsi urungkan
+            showNotificationWithUndo(`${selectedFavorites.length} favorit telah dihapus`);
+            
+            // Reset seleksi
+            selectedFavorites = [];
+            exitSelectionMode();
+            renderFavorites();
+        }
+
+        // Fungsi untuk menampilkan notifikasi dengan opsi urungkan
+        function showNotificationWithUndo(message) {
+            // Hapus notifikasi sebelumnya jika ada
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.classList.remove('show');
+                existingNotification.classList.add('hide');
+                setTimeout(() => existingNotification.remove(), 300);
+                clearTimeout(notificationTimeout);
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = 'notification show';
+            
+            notification.innerHTML = `
+                <span>${message}</span>
+                <span class="notification-undo" id="undoDeleteBtn">URUNGKAN</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Event listener untuk tombol urungkan
+            document.getElementById('undoDeleteBtn').addEventListener('click', undoDelete);
+            
+            // Set timeout untuk menghilangkan notifikasi otomatis setelah 5 detik
+            notificationTimeout = setTimeout(() => {
+                notification.classList.remove('show');
+                notification.classList.add('hide');
+                setTimeout(() => {
+                    notification.remove();
+                    deletedFavorites = null; // Bersihkan data setelah notifikasi hilang
+                }, 300);
+            }, 5000);
+        }
+
+        // Fungsi untuk mengurungkan penghapusan
+        function undoDelete() {
+            if (!deletedFavorites) return;
+            
+            const currentFavorites = getFavorites();
+            const restoredFavorites = [...currentFavorites, ...deletedFavorites.data];
+            localStorage.setItem('hadithFavorites', JSON.stringify(restoredFavorites));
+            
+            // Sembunyikan notifikasi
+            const notification = document.querySelector('.notification');
+            if (notification) {
+                notification.classList.remove('show');
+                notification.classList.add('hide');
+                setTimeout(() => notification.remove(), 300);
+            }
+            
+            clearTimeout(notificationTimeout);
+            deletedFavorites = null;
+            
+            // Render ulang daftar favorit
+            renderFavorites();
+            
+            // Tampilkan notifikasi bahwa penghapusan telah diurungkan
+            showTemporaryNotification('Penghapusan telah diurungkan');
+        }
+
+        // Fungsi untuk menampilkan notifikasi sementara
+        function showTemporaryNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification show';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                notification.classList.add('hide');
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+
+        // Fungsi untuk toggle mode seleksi
+        function toggleSelectionMode() {
+            selectionMode = !selectionMode;
+            const selectModeBtn = document.getElementById('selectModeBtn');
+            
+            if (selectionMode) {
+                // Masuk ke mode seleksi
+                document.getElementById('selectionControls').style.display = 'flex';
+                selectModeBtn.innerHTML = '<i class="fas fa-times-circle"></i>';
+                selectModeBtn.classList.add('selecting');
+            } else {
+                // Keluar dari mode seleksi
+                exitSelectionMode();
+            }
+            
+            renderFavorites();
+        }
+
+        // Fungsi untuk keluar dari mode seleksi
+        function exitSelectionMode() {
+            selectionMode = false;
+            selectedFavorites = [];
+            document.getElementById('selectionControls').style.display = 'none';
+            const selectModeBtn = document.getElementById('selectModeBtn');
+            selectModeBtn.innerHTML = '<i class="fas fa-check-circle"></i>';
+            selectModeBtn.classList.remove('selecting');
+            renderFavorites();
+        }
+
+        // Fungsi untuk memilih semua favorit
+        function selectAllFavorites() {
+            const favorites = getFavorites();
+            if (selectedFavorites.length === favorites.length) {
+                // Jika sudah terpilih semua, batalkan seleksi
+                selectedFavorites = [];
+            } else {
+                // Pilih semua favorit
+                selectedFavorites = favorites.map(fav => fav.id);
+            }
+            updateSelectionInfo();
+            
+            // Centang semua checkbox
+            document.querySelectorAll('.favorit-checkbox').forEach(checkbox => {
+                checkbox.checked = selectedFavorites.includes(checkbox.getAttribute('data-id'));
+            });
+            
+            toggleCardSelection();
+        }
+
+        // Fungsi untuk toggle tema gelap
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const icon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                // Animasi tombol tema
+                this.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                }
+            });
+        }
+
+        // Fungsi untuk hide/show footer saat scroll
+        function setupScrollBehavior() {
+            const bottomNav = document.getElementById('bottomNav');
+            let lastScrollPosition = 0;
+            let ticking = false;
+            
+            window.addEventListener('scroll', function() {
+                const currentScrollPosition = window.pageYOffset;
+                
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        if (currentScrollPosition > lastScrollPosition && currentScrollPosition > 100) {
+                            // Scrolling down
+                            bottomNav.classList.add('hidden');
+                        } else {
+                            // Scrolling up
+                            bottomNav.classList.remove('hidden');
+                        }
+                        lastScrollPosition = currentScrollPosition;
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        }
+
+        // Fungsi untuk bottom navigation
+        function setupBottomNav() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            
+            navItems.forEach(item => {
+                const itemHref = item.getAttribute('href').split('/').pop();
+                
+                // Set active class based on current page
+                if (itemHref === currentPage) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+                
+                // Add click animation
+                item.addEventListener('click', function(e) {
+                    if (!this.classList.contains('active')) {
+                        this.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 200);
+                    }
+                });
+            });
+        }
+
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            renderFavorites();
+            setupThemeToggle();
+            setupScrollBehavior();
+            setupBottomNav();
+            
+            // Event listener untuk tombol mode seleksi
+            document.getElementById('selectModeBtn').addEventListener('click', toggleSelectionMode);
+            
+            // Event listener untuk tombol pilih semua
+            document.getElementById('selectAllBtn').addEventListener('click', selectAllFavorites);
+            
+            // Event listener untuk tombol hapus yang dipilih
+            document.getElementById('deleteSelectedBtn').addEventListener('click', removeSelectedFavorites);
+            
+            // Event listener untuk tombol batal seleksi
+            document.getElementById('cancelSelectionBtn').addEventListener('click', exitSelectionMode);
+        });
+    </script>
+</body>
+</html>

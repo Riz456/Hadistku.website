@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Adzan Semarang - HaditsKu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="website icon" type="png" href="alquran.png">
+    <style>
+        :root {
+            --primary: #8e44ad;
+            --primary-light: rgba(142, 68, 173, 0.1);
+            --primary-dark: #6c3483;
+            --secondary: #d6ccb5;
+            --accent: #f5c361;
+            --dark: #1e2a3a;
+            --light: #f8f8f6;
+            --gray: #718096;
+            --arabic-font: 'Amiri', serif;
+            
+            /* Dark mode variables */
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #e0e0e0;
+            --dark-border: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            padding-bottom: 60px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode .header {
+            background-color: var(--dark-card);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover .logo-icon {
+            transform: scale(1.1);
+        }
+
+        .logo-text h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-3px);
+        }
+
+        .page-title {
+            flex: 1;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        body.dark-mode .page-title {
+            color: var(--secondary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.1rem;
+            margin-left: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .theme-toggle {
+            color: var(--dark-text);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            color: var(--accent);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 15px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Location Info */
+        .location-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode .location-info {
+            background-color: var(--dark-card);
+        }
+
+        .location-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .location-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .location-text h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        body.dark-mode .location-text h2 {
+            color: var(--dark-text);
+        }
+
+        .location-text p {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .date-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--primary-light);
+        }
+
+        .hijri-date {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .gregorian-date {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Current Time */
+        .current-time {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode .current-time {
+            background-color: var(--primary-dark);
+        }
+
+        .current-time-label {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .current-time-display {
+            font-size: 2rem;
+            font-weight: 600;
+            font-family: monospace;
+        }
+
+        /* Prayer Times */
+        .prayer-times {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .prayer-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .prayer-card {
+            background-color: var(--dark-card);
+            border-color: var(--dark-border);
+        }
+
+        .prayer-card.active {
+            background-color: var(--primary-light);
+            border-color: var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(142, 68, 173, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(142, 68, 173, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(142, 68, 173, 0); }
+        }
+
+        .prayer-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        body.dark-mode .prayer-name {
+            color: var(--dark-text);
+        }
+
+        .prayer-name i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .prayer-time {
+            font-size: 1.5rem;
+            font-weight: 600;
+            font-family: monospace;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .prayer-remaining {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .prayer-card.active .prayer-remaining {
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
+
+        /* Next Prayer */
+        .next-prayer {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: var(--primary-light);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .next-prayer-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .next-prayer-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .next-prayer-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .next-prayer-time {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .next-prayer-countdown {
+            font-size: 1.5rem;
+            font-weight: 600;
+            font-family: monospace;
+            color: var(--primary-dark);
+        }
+
+        /* Settings */
+        .settings-section {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode .settings-section {
+            background-color: var(--dark-card);
+        }
+
+        .settings-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        body.dark-mode .settings-title {
+            color: var(--dark-text);
+        }
+
+        .settings-title i {
+            color: var(--primary);
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--primary-light);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+        body.dark-mode .setting-label {
+            color: var(--dark-text);
+        }
+
+        .setting-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.08);
+            z-index: 90;
+            transform: translateY(0);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode .bottom-nav {
+            background-color: var(--dark-card);
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.2);
+        }
+
+        .bottom-nav.hidden {
+            transform: translateY(100%);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.75rem;
+            padding: 5px 10px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background-color: var(--primary-light);
+            transform: translateY(-5px);
+        }
+
+        .nav-item:not(.active):hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active i {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(150%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification i {
+            font-size: 1.5rem;
+        }
+
+        .notification-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .notification-message {
+            font-size: 0.9rem;
+        }
+
+        .notification-close {
+            margin-left: 10px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .prayer-times {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .prayer-times {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="page-title">Jadwal Adzan</div>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Location Info -->
+        <div class="location-info">
+            <div class="location-header">
+                <div class="location-icon">
+                    <i class="fas fa-location-dot"></i>
+                </div>
+                <div class="location-text">
+                    <h2>Kabupaten Semarang</h2>
+                    <p>Jawa Tengah, Indonesia</p>
+                </div>
+            </div>
+            <div class="date-info">
+                <div class="hijri-date" id="hijriDate">1446 H</div>
+                <div class="gregorian-date" id="gregorianDate">Rabu, 7 Mei 2025</div>
+            </div>
+        </div>
+
+        <!-- Current Time -->
+        <div class="current-time">
+            <div class="current-time-label">Waktu Sekarang</div>
+            <div class="current-time-display" id="currentTime">00:00:00</div>
+        </div>
+
+        <!-- Prayer Times -->
+        <div class="prayer-times" id="prayerTimes">
+            <!-- Jadwal sholat akan dimuat di sini -->
+        </div>
+
+        <!-- Next Prayer -->
+        <div class="next-prayer" id="nextPrayer">
+            <div class="next-prayer-info">
+                <div class="next-prayer-label">Sholat Berikutnya</div>
+                <div class="next-prayer-name" id="nextPrayerName">-</div>
+            </div>
+            <div class="next-prayer-countdown" id="nextPrayerCountdown">-</div>
+        </div>
+
+        <!-- Settings -->
+        <div class="settings-section">
+            <div class="settings-title">
+                <i class="fas fa-cog"></i>
+                <span>Pengaturan</span>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">Notifikasi Adzan</div>
+                <div class="setting-control">
+                    <label class="switch">
+                        <input type="checkbox" id="notificationToggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-bell"></i>
+        <div class="notification-content">
+            <div class="notification-title" id="notificationTitle">Waktu Sholat</div>
+            <div class="notification-message" id="notificationMessage">Waktu Shubuh telah tiba</div>
+        </div>
+        <button class="notification-close" id="notificationClose">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" id="bottomNav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </a>
+        <a href="jadwal-sholat.html" class="nav-item active">
+            <i class="fas fa-clock"></i>
+            <span>Jadwal</span>
+        </a>
+        <a href="kitab-hadist.html" class="nav-item">
+            <i class="fas fa-book"></i>
+            <span>Kitab</span>
+        </a>
+        <a href="profil-hadist.html" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profil</span>
+        </a>
+    </nav>
+
+    <!-- Audio untuk adzan -->
+    <audio id="adhanAudio" src="adzan.mp3" preload="auto"></audio>
+
+    <script>
+    // Fungsi untuk mendapatkan tanggal Hijriah
+    function getHijriDate() {
+        const hijriMonths = [
+            "Muharram", "Safar", "Rabiul Awwal", "Rabiul Akhir", 
+            "Jumadil Awwal", "Jumadil Akhir", "Rajab", "Sya'ban", 
+            "Ramadan", "Syawwal", "Dzulqaidah", "Dzulhijjah"
+        ];
+        
+        const today = new Date();
+        const gregorianDate = today.toLocaleDateString('id-ID', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+        
+        // Contoh tanggal Hijriah (dalam implementasi nyata, gunakan API atau library)
+        // Ini hanya contoh untuk 7 Mei 2025
+        const hijriDate = "29 Ramadan 1446 H";
+        
+        return {
+            gregorian: gregorianDate,
+            hijri: hijriDate
+        };
+    }
+
+    // Data jadwal sholat untuk Kota Semarang (contoh data untuk 7 Mei 2025)
+    function getPrayerTimes() {
+        return {
+            "location": "Kabupaten Semarang",
+            "province": "Jawa Tengah",
+            "coordinates": {
+                "latitude": -6.966667,
+                "longitude": 110.416664
+            },
+            "timezone": "Asia/Jakarta",
+            "method": "Kemenag RI",
+            "today": {
+                "date": "2025-05-07",
+                "hijri": "1446 H",
+                "gregorian": "Rabu, 7 Mei 2025",
+                "times": {
+                    "subuh": "04:38",
+                    "terbit": "05:40",
+                    "dhuha": "06:05",
+                    "dzuhur": "11:46",
+                    "ashar": "16:10",
+                    "maghrib": "17:29",
+                    "isya": "18:41"
+                }
+            },
+            "tomorrow": {
+                "date": "2025-05-08",
+                "hijri": "30 Ramadan 1446 H",
+                "gregorian": "Kamis, 8 Mei 2025",
+                "times": {
+                    "imsak": "04:19",
+                    "subuh": "04:29",
+                    "terbit": "05:40",
+                    "dhuha": "06:05",
+                    "dzuhur": "11:35",
+                    "ashar": "14:56",
+                    "maghrib": "17:29",
+                    "isya": "18:41"
+                }
+            }
+        };
+    }
+
+    // Nama sholat dalam bahasa Indonesia dan Arab
+    const prayerNames = {
+        "imsak": { "id": "Imsak", "ar": "الإمساك" },
+        "subuh": { "id": "Subuh", "ar": "الفجر" },
+        "terbit": { "id": "Terbit", "ar": "الشروق" },
+        "dhuha": { "id": "Dhuha", "ar": "الضحى" },
+        "dzuhur": { "id": "Dzuhur", "ar": "الظهر" },
+        "ashar": { "id": "Ashar", "ar": "العصر" },
+        "maghrib": { "id": "Maghrib", "ar": "المغرب" },
+        "isya": { "id": "Isya", "ar": "العشاء" }
+    };
+
+    // Ikon untuk setiap waktu sholat
+    const prayerIcons = {
+        "imsak": "fas fa-moon",
+        "subuh": "fas fa-sun",
+        "terbit": "fas fa-sun-plant-wilt",
+        "dhuha": "fas fa-sun",
+        "dzuhur": "fas fa-sun",
+        "ashar": "fas fa-sun",
+        "maghrib": "fas fa-moon-stars",
+        "isya": "fas fa-moon"
+    };
+
+    // Variabel global
+    let currentTime;
+    let activePrayer = null;
+    let nextPrayer = null;
+    let timeUntilNextPrayer = null;
+    let notificationEnabled = true;
+    let adhanPlayed = false;
+    let timer;
+    let prayerTimesData = getPrayerTimes();
+    let dates = getHijriDate();
+
+    // Fungsi untuk menginisialisasi halaman
+    function initPage() {
+        // Set tanggal
+        document.getElementById('hijriDate').textContent = dates.hijri;
+        document.getElementById('gregorianDate').textContent = dates.gregorian;
+        
+        // Render jadwal sholat
+        renderPrayerTimes();
+        
+        // Set waktu sekarang dan update setiap detik
+        updateCurrentTime();
+        setInterval(updateCurrentTime, 1000);
+        
+        // Set next prayer dan countdown
+        updateNextPrayer();
+        setInterval(updateNextPrayer, 1000);
+        
+        // Setup toggle notifikasi
+        setupNotificationToggle();
+        
+        // Setup theme toggle
+        setupThemeToggle();
+        
+        // Setup bottom nav
+        setupBottomNav();
+        
+        // Setup scroll behavior
+        setupScrollBehavior();
+        
+        // Setup notification close button
+        document.getElementById('notificationClose').addEventListener('click', hideNotification);
+        
+        // Cek autoplay audio support
+        checkAudioSupport();
+    }
+
+    // Fungsi untuk memeriksa dukungan autoplay audio
+    function checkAudioSupport() {
+        const audio = document.getElementById('adhanAudio');
+        audio.volume = 0.5; // Set volume ke 50%
+        
+        try {
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Autoplay berhasil, langsung pause
+                    audio.pause();
+                    audio.currentTime = 0;
+                }).catch(error => {
+                    console.warn('Autoplay audio diblokir:', error);
+                    // Tampilkan instruksi ke pengguna
+                    alert('Mohon aktifkan autoplay audio di browser Anda untuk mendengar adzan.');
+                });
+            }
+        } catch (e) {
+            console.error('Error saat mengecek autoplay:', e);
+        }
+    }
+
+    // Fungsi untuk merender jadwal sholat
+    function renderPrayerTimes() {
+        const container = document.getElementById('prayerTimes');
+        container.innerHTML = '';
+        
+        const prayers = ['subuh', 'terbit', 'dzuhur', 'ashar', 'maghrib', 'isya'];
+        
+        prayers.forEach(prayer => {
+            const card = document.createElement('div');
+            card.className = 'prayer-card';
+            card.id = `prayer-${prayer}`;
+            card.innerHTML = `
+                <div class="prayer-name">
+                    <i class="${prayerIcons[prayer]}"></i>
+                    <span>${prayerNames[prayer].id}</span>
+                </div>
+                <div class="prayer-time">${prayerTimesData.today.times[prayer]}</div>
+                <div class="prayer-remaining" id="remaining-${prayer}"></div>
+            `;
+            
+            container.appendChild(card);
+        });
+    }
+
+    // Fungsi untuk update waktu saat ini
+    function updateCurrentTime() {
+        const now = new Date();
+        currentTime = now;
+        
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        
+        document.getElementById('currentTime').textContent = `${hours}:${minutes}:${seconds}`;
+        
+        // Cek apakah sudah masuk waktu sholat
+        checkPrayerTime();
+    }
+
+    // Fungsi untuk memeriksa waktu sholat
+    function checkPrayerTime() {
+        const now = currentTime;
+        const currentHours = now.getHours();
+        const currentMinutes = now.getMinutes();
+        const currentSeconds = now.getSeconds();
+        
+        const prayers = ['subuh', 'terbit', 'dzuhur', 'ashar', 'maghrib', 'isya'];
+        
+        // Reset status aktif sebelumnya
+        if (activePrayer) {
+            document.getElementById(`prayer-${activePrayer}`).classList.remove('active');
+            activePrayer = null;
+        }
+        
+        // Cek setiap waktu sholat
+        for (const prayer of prayers) {
+            const prayerTime = prayerTimesData.today.times[prayer];
+            const [prayerHours, prayerMinutes] = prayerTime.split(':').map(Number);
+            
+            // Hitung waktu dalam detik untuk perbandingan lebih akurat
+            const currentTimeInSeconds = currentHours * 3600 + currentMinutes * 60 + currentSeconds;
+            const prayerTimeInSeconds = prayerHours * 3600 + prayerMinutes * 60;
+            
+            // Beri toleransi ±5 detik untuk memastikan adzan dimainkan
+            if (Math.abs(currentTimeInSeconds - prayerTimeInSeconds) <= 5) {
+                activePrayer = prayer;
+                document.getElementById(`prayer-${prayer}`).classList.add('active');
+                
+                // Tampilkan notifikasi jika belum ditampilkan
+                if (!adhanPlayed) {
+                    showNotification(prayer);
+                    playAdhan();
+                    adhanPlayed = true;
+                    
+                    // Reset flag adhanPlayed setelah 1 menit
+                    setTimeout(() => {
+                        adhanPlayed = false;
+                    }, 60000);
+                }
+                
+                break;
+            }
+        }
+    }
+
+    // Fungsi untuk update sholat berikutnya dan countdown
+    function updateNextPrayer() {
+        const now = currentTime || new Date();
+        const currentHours = now.getHours();
+        const currentMinutes = now.getMinutes();
+        const currentSeconds = now.getSeconds();
+        const currentTimeInMinutes = currentHours * 60 + currentMinutes;
+        
+        const prayers = ['subuh', 'terbit', 'dzuhur', 'ashar', 'maghrib', 'isya', 'subuh'];
+        let nextPrayerFound = false;
+        
+        // Cari sholat berikutnya
+        for (let i = 0; i < prayers.length - 1; i++) {
+            const prayer = prayers[i];
+            const nextPrayerName = prayers[i+1];
+            const prayerTime = prayerTimesData.today.times[prayer];
+            const [prayerHours, prayerMinutes] = prayerTime.split(':').map(Number);
+            const prayerTimeInMinutes = prayerHours * 60 + prayerMinutes;
+            
+            const nextPrayerTime = prayerTimesData.today.times[nextPrayerName];
+            const [nextPrayerHours, nextPrayerMinutes] = nextPrayerTime.split(':').map(Number);
+            const nextPrayerTimeInMinutes = nextPrayerHours * 60 + nextPrayerMinutes;
+            
+            // Jika waktu sekarang antara waktu sholat ini dan sholat berikutnya
+            if (currentTimeInMinutes >= prayerTimeInMinutes && currentTimeInMinutes < nextPrayerTimeInMinutes) {
+                nextPrayer = nextPrayerName;
+                nextPrayerFound = true;
+                
+                // Hitung waktu tersisa hingga sholat berikutnya
+                const remainingMinutes = nextPrayerTimeInMinutes - currentTimeInMinutes - 1;
+                const remainingSeconds = 60 - currentSeconds;
+                
+                // Format countdown
+                const hours = Math.floor(remainingMinutes / 60);
+                const minutes = remainingMinutes % 60;
+                
+                let countdownText = '';
+                if (hours > 0) {
+                    countdownText += `${hours}j `;
+                }
+                countdownText += `${minutes}m ${remainingSeconds}d`;
+                
+                // Update UI
+                document.getElementById('nextPrayerName').textContent = prayerNames[nextPrayerName].id;
+                document.getElementById('nextPrayerCountdown').textContent = countdownText;
+                
+                break;
+            }
+        }
+        
+        // Jika tidak ditemukan (setelah isya sebelum subuh)
+        if (!nextPrayerFound) {
+            nextPrayer = 'subuh';
+            const nextPrayerTime = prayerTimesData.tomorrow.times.subuh;
+            const [nextPrayerHours, nextPrayerMinutes] = nextPrayerTime.split(':').map(Number);
+            
+            // Hitung waktu tersisa hingga subuh besok
+            const nowInSeconds = currentHours * 3600 + currentMinutes * 60 + currentSeconds;
+            const nextPrayerInSeconds = nextPrayerHours * 3600 + nextPrayerMinutes * 60;
+            const remainingSeconds = (24 * 3600 - nowInSeconds) + nextPrayerInSeconds;
+            
+            const hours = Math.floor(remainingSeconds / 3600);
+            const minutes = Math.floor((remainingSeconds % 3600) / 60);
+            const seconds = remainingSeconds % 60;
+            
+            // Format countdown
+            let countdownText = '';
+            if (hours > 0) {
+                countdownText += `${hours}j `;
+            }
+            countdownText += `${minutes}m ${seconds}d`;
+            
+            // Update UI
+            document.getElementById('nextPrayerName').textContent = "Subuh (Besok)";
+            document.getElementById('nextPrayerCountdown').textContent = countdownText;
+        }
+    }
+
+    // Fungsi untuk menampilkan notifikasi
+    function showNotification(prayer) {
+        if (!notificationEnabled) return;
+        
+        const notification = document.getElementById('notification');
+        const title = document.getElementById('notificationTitle');
+        const message = document.getElementById('notificationMessage');
+        
+        title.textContent = `Waktu ${prayerNames[prayer].id}`;
+        message.textContent = `Waktu sholat ${prayerNames[prayer].id} telah tiba (${prayerTimesData.today.times[prayer]})`;
+        
+        notification.classList.add('show');
+        
+        // Sembunyikan notifikasi setelah 10 detik
+        setTimeout(hideNotification, 10000);
+    }
+
+    // Fungsi untuk menyembunyikan notifikasi
+    function hideNotification() {
+        const notification = document.getElementById('notification');
+        notification.classList.remove('show');
+    }
+
+    // Fungsi untuk memainkan suara adzan
+    function playAdhan() {
+        if (!notificationEnabled) return;
+        
+        const audio = document.getElementById('adhanAudio');
+        audio.currentTime = 0;
+        
+        // Coba play audio
+        const playPromise = audio.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                console.log('Adzan berhasil dimainkan');
+            }).catch(error => {
+                console.error('Gagal memainkan adzan:', error);
+                // Tampilkan pesan error ke user
+                alert('Tidak dapat memainkan adzan. Mohon aktifkan autoplay audio di browser Anda.');
+            });
+        }
+    }
+
+    // Fungsi untuk setup toggle notifikasi
+    function setupNotificationToggle() {
+        const toggle = document.getElementById('notificationToggle');
+        
+        // Cek preferensi pengguna dari localStorage
+        if (localStorage.getItem('notificationEnabled') === 'false') {
+            toggle.checked = false;
+            notificationEnabled = false;
+        } else {
+            toggle.checked = true;
+            notificationEnabled = true;
+        }
+        
+        toggle.addEventListener('change', function() {
+            notificationEnabled = this.checked;
+            localStorage.setItem('notificationEnabled', this.checked);
+            
+            // Animasi toggle
+            this.parentElement.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                this.parentElement.style.transform = '';
+            }, 200);
+        });
+    }
+
+    // Fungsi untuk setup toggle tema gelap
+    function setupThemeToggle() {
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            icon.classList.replace('fa-moon', 'fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                localStorage.setItem('theme', 'light');
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        });
+    }
+
+    // Fungsi untuk hide/show footer saat scroll
+    function setupScrollBehavior() {
+        const bottomNav = document.getElementById('bottomNav');
+        let lastScrollPosition = 0;
+        let ticking = false;
+        
+        window.addEventListener('scroll', function() {
+            const currentScrollPosition = window.pageYOffset;
+            
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    if (currentScrollPosition > lastScrollPosition && currentScrollPosition > 100) {
+                        // Scrolling down
+                        bottomNav.classList.add('hidden');
+                    } else {
+                        // Scrolling up
+                        bottomNav.classList.remove('hidden');
+                    }
+                    lastScrollPosition = currentScrollPosition;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    }
+
+    // Fungsi untuk bottom navigation
+    function setupBottomNav() {
+        const navItems = document.querySelectorAll('.nav-item');
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        
+        navItems.forEach(item => {
+            const itemHref = item.getAttribute('href').split('/').pop();
+            
+            // Set active class based on current page
+            if (itemHref === currentPage) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+            
+            // Add click animation
+            item.addEventListener('click', function(e) {
+                if (!this.classList.contains('active')) {
+                    this.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                }
+            });
+        });
+    }
+
+    // Inisialisasi saat DOM siap
+    document.addEventListener('DOMContentLoaded', initPage);
+</script>
+</body>
+</html>
