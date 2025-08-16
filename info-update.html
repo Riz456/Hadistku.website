@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pembaruan - HaditsKu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="website icon" type="png" href="alquran.png" />
+    <style>
+        :root {
+            --primary: #0d6e6e;
+            --primary-light: rgba(13, 110, 110, 0.1);
+            --primary-dark: #0a4f4f;
+            --secondary: #d6ccb5;
+            --accent: #f5c361;
+            --dark: #1e2a3a;
+            --light: #f8f8f6;
+            --gray: #718096;
+
+            /* Dark mode variables */
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #e0e0e0;
+            --dark-border: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            padding-bottom: 70px;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        body.dark-mode .header {
+            background-color: var(--dark-card);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-light);
+            transform: translateX(-2px);
+        }
+
+        .page-title {
+            flex: 1;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: -0.3px;
+        }
+
+        body.dark-mode .page-title {
+            color: var(--secondary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--primary-light);
+            transform: rotate(15deg);
+        }
+
+        body.dark-mode .theme-toggle {
+            color: var(--dark-text);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 15px;
+        }
+
+        /* Update Section */
+        .update-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .update-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--primary-light);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            color: var(--primary);
+            font-size: 2rem;
+            box-shadow: 0 4px 10px rgba(13, 110, 110, 0.1);
+        }
+
+        body.dark-mode .app-icon {
+            background-color: rgba(13, 110, 110, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        body.dark-mode .app-name {
+            color: var(--secondary);
+        }
+
+        .app-version {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .check-update {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .check-update:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .check-update i {
+            font-size: 0.9rem;
+        }
+
+        /* Update List */
+        .update-list {
+            margin-top: 25px;
+        }
+
+        .update-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        body.dark-mode .update-title {
+            color: var(--secondary);
+        }
+
+        .update-title i {
+            font-size: 1.1rem;
+        }
+
+        .update-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .update-item {
+            background-color: var(--dark-card);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .update-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .update-version {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        body.dark-mode .update-version {
+            color: var(--secondary);
+        }
+
+        .update-date {
+            font-size: 0.7rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .update-features {
+            padding-left: 15px;
+        }
+
+        .feature-item {
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .feature-item:before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+
+        body.dark-mode .feature-item:before {
+            background-color: var(--secondary);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 30px);
+            max-width: 400px;
+            background-color: white;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 5px;
+            box-shadow: 
+                0 -2px 5px rgba(0,0,0,0.03),
+                0 5px 15px rgba(0,0,0,0.1);
+            z-index: 90;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode .bottom-nav {
+            background-color: var(--dark-card);
+            box-shadow: 
+                0 -2px 5px rgba(0,0,0,0.1),
+                0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .bottom-nav.hidden {
+            transform: translateX(-50%) translateY(calc(100% + 20px));
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.65rem;
+            padding: 5px 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item i {
+            font-size: 1.1rem;
+            margin-bottom: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            transform: translateY(-8px);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        .nav-item:not(.active):hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .nav-item.active i {
+            transform: scale(1.15);
+        }
+
+        /* Responsive */
+        @media (min-width: 400px) {
+            .update-item {
+                padding: 18px;
+            }
+            
+            .update-version {
+                font-size: 1rem;
+            }
+            
+            .feature-item {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="page-title">Pembaruan</div>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="update-container">
+            <div class="update-header">
+                <div class="app-icon">
+                    <i class="fas fa-book-quran"></i>
+                </div>
+                <h1 class="app-name">HaditsKu</h1>
+                <p class="app-version">Versi 1.1.0</p>
+                <button class="check-update" id="checkUpdate">
+                    <i class="fas fa-sync-alt"></i>
+                    Periksa Pembaruan
+                </button>
+            </div>
+
+            <div class="update-list">
+                <h2 class="update-title">
+                    <i class="fas fa-history"></i>
+                    Riwayat Pembaruan
+                </h2>
+
+                <!-- Update Item -->
+                <div class="update-item">
+                    <div class="update-version">
+                        <span>v1.1.0</span>
+                        <span class="badge-new">BARU</span>
+                    </div>
+                    <div class="update-date">Dirilis pada 17 Agustus 2025</div>
+                    <ul class="update-features">
+                        <li class="feature-item">Penambahan lebih dari 500 hadits baru dari berbagai Kitab.</li>
+                        <li class="feature-item">Fitur pencarian hadits yang lebih cepat dan akurat</li>
+                        <li class="feature-item">Penambahan fitur halaman menu lainya, surah yasin, Catatan Hadisku, Doa harian, dzikir, kategori hadist dan lapor bug.</li>
+                        <li class="feature-item">Perbaikan bug pada mode malam (dark mode)</li>
+                        <li class="feature-item">Peningkatan performa aplikasi web secara keseluruhan</li>
+                    </ul>
+                </div>
+
+                <!-- Update Item -->
+                <div class="update-item">
+                    <div class="update-version">v1.0.0</div>
+                    <div class="update-date">Dirilis secara publik pada 15 Mei 2024</div>
+                    <ul class="update-features">
+                        <li class="feature-item">Penambahan beberapa hadist Imam terkenal dan shahih</li>
+                        <li class="feature-item">Penambahan fitur dark mode (mode gelap)</li>
+                        <li class="feature-item">Perbaikan bug pop up melayang dan footer.</li>
+                    </ul>
+                </div>
+
+                <!-- Update Item -->
+                <div class="update-item">
+                    <div class="update-version">Beta Version</div>
+                    <div class="update-date">Dirilis pada 27 April 2024</div>
+                    <ul class="update-features">
+                        <li class="feature-item">Model awal terciptanya website Hadistku.</li>
+                        <li class="feature-item">Dapat diakses untuk beberapa orang penguji dan web yang sangat terbatas.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Fungsi untuk toggle tema gelap
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const icon = themeToggle.querySelector('i');
+
+            // Check for saved theme preference
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+
+            themeToggle.addEventListener('click', function () {
+                document.body.classList.toggle('dark-mode');
+
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                }
+            });
+        }
+
+        // Fungsi untuk bottom navigation
+        function setupBottomNav() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+            navItems.forEach(item => {
+                const itemHref = item.getAttribute('href').split('/').pop();
+
+                // Set active class based on current page
+                if (itemHref === currentPage) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        // Fungsi untuk hide/show footer saat scroll
+        function setupScrollBehavior() {
+            const bottomNav = document.getElementById('bottomNav');
+            let lastScrollPosition = 0;
+            const scrollThreshold = 5;
+
+            window.addEventListener('scroll', function () {
+                const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (currentScrollPosition > lastScrollPosition && currentScrollPosition > scrollThreshold) {
+                    bottomNav.classList.add('hidden');
+                } else if (currentScrollPosition < lastScrollPosition) {
+                    bottomNav.classList.remove('hidden');
+                }
+
+                lastScrollPosition = currentScrollPosition <= 0 ? 0 : currentScrollPosition;
+            });
+        }
+
+        // Fungsi untuk tombol periksa pembaruan
+        function setupUpdateCheck() {
+            const checkUpdateBtn = document.getElementById('checkUpdate');
+            
+            checkUpdateBtn.addEventListener('click', function() {
+                // Simulasi pengecekan pembaruan
+                checkUpdateBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Memeriksa...';
+                
+                setTimeout(() => {
+                    checkUpdateBtn.innerHTML = '<i class="fas fa-check"></i> Aplikasi sudah terbaru';
+                    checkUpdateBtn.style.backgroundColor = '#4CAF50';
+                    
+                    setTimeout(() => {
+                        checkUpdateBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Periksa Pembaruan';
+                        checkUpdateBtn.style.backgroundColor = '';
+                    }, 2000);
+                }, 1500);
+            });
+        }
+
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function () {
+            setupThemeToggle();
+            setupBottomNav();
+            setupScrollBehavior();
+            setupUpdateCheck();
+        });
+    </script>
+</body>
+</html>

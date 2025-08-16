@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doa Harian - HaditsKu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="website icon" type="png" href="alquran.png">
+    <style>
+        :root {
+            --primary: #0d6e6e;
+            --primary-light: rgba(13, 110, 110, 0.1);
+            --primary-dark: #0a4f4f;
+            --secondary: #d6ccb5;
+            --accent: #f5c361;
+            --dark: #1e2a3a;
+            --light: #f8f8f6;
+            --gray: #718096;
+            
+            /* Dark mode variables */
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #e0e0e0;
+            --dark-border: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            padding-bottom: 80px;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        body.dark-mode .header {
+            background-color: var(--dark-card);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-light);
+            transform: translateX(-2px);
+        }
+
+        .page-title {
+            flex: 1;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: -0.3px;
+        }
+
+        body.dark-mode .page-title {
+            color: var(--secondary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--primary-light);
+            transform: rotate(15deg);
+        }
+
+        body.dark-mode .theme-toggle {
+            color: var(--dark-text);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 15px;
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding: 5px 0;
+            margin-bottom: 15px;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .category-tabs::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+
+        .category-tab {
+            padding: 8px 15px;
+            border-radius: 20px;
+            background-color: var(--light);
+            color: var(--dark);
+            font-size: 0.85rem;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .category-tab {
+            background-color: var(--dark-card);
+            border-color: var(--dark-border);
+            color: var(--dark-text);
+        }
+
+        .category-tab.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Prayer Card */
+        .prayer-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .prayer-card {
+            background-color: var(--dark-card);
+            border-color: var(--dark-border);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .prayer-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+        }
+
+        .prayer-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        body.dark-mode .prayer-title {
+            color: var(--secondary);
+        }
+
+        .prayer-title i {
+            font-size: 1rem;
+        }
+
+        .prayer-text {
+            font-family: 'Amiri', serif;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            text-align: right;
+            direction: rtl;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        body.dark-mode .prayer-text {
+            color: var(--dark-text);
+        }
+
+        .prayer-translation {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+            border-top: 1px dashed var(--light-gray);
+            padding-top: 15px;
+        }
+
+        body.dark-mode .prayer-translation {
+            color: var(--dark-text);
+            border-top-color: var(--dark-border);
+        }
+
+        .prayer-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .prayer-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .prayer-action {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1rem;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .prayer-action:hover {
+            background-color: var(--primary-light);
+            transform: scale(1.1);
+        }
+
+        body.dark-mode .prayer-action {
+            color: var(--secondary);
+        }
+
+        /* Floating Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 30px);
+            max-width: 400px;
+            background-color: white;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 5px;
+            box-shadow: 
+                0 -2px 5px rgba(0,0,0,0.03),
+                0 6px 18px rgba(0,0,0,0.1);
+            z-index: 90;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode .bottom-nav {
+            background-color: var(--dark-card);
+            box-shadow: 
+                0 -2px 5px rgba(0,0,0,0.1),
+                0 6px 18px rgba(0,0,0,0.2);
+        }
+
+        .bottom-nav.hidden {
+            transform: translateX(-50%) translateY(calc(100% + 20px));
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.7rem;
+            padding: 6px 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item i {
+            font-size: 1.15rem;
+            margin-bottom: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        .nav-item:not(.active):hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active i {
+            transform: scale(1.1);
+        }
+
+        /* Responsive Adjustments */
+        @media (min-width: 400px) {
+            .main {
+                padding: 20px;
+            }
+            
+            .prayer-card {
+                padding: 25px;
+            }
+            
+            .prayer-text {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (min-width: 600px) {
+            .main {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            
+            .category-tabs {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="page-title">Doa Harian</div>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Category Tabs -->
+        <div class="category-tabs" id="categoryTabs">
+            <div class="category-tab active" data-category="all">Semua</div>
+            <div class="category-tab" data-category="morning">Pagi</div>
+            <div class="category-tab" data-category="evening">Petang</div>
+            <div class="category-tab" data-category="eating">Makan</div>
+            <div class="category-tab" data-category="sleeping">Tidur</div>
+            <div class="category-tab" data-category="travel">Bepergian</div>
+            <div class="category-tab" data-category="other">Lainnya</div>
+        </div>
+
+        <!-- Prayer List -->
+        <div id="prayerList">
+            <!-- Doa Bangun Tidur -->
+            <div class="prayer-card" data-category="morning">
+                <h3 class="prayer-title">
+                    <i class="fas fa-sun"></i>
+                    Doa Bangun Tidur
+                </h3>
+                <div class="prayer-text">
+                    اَلْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ
+                </div>
+                <div class="prayer-translation">
+                    "Segala puji bagi Allah yang telah menghidupkan kami setelah mematikan kami dan kepada-Nya lah kebangkitan." (HR. Bukhari)
+                </div>
+                <div class="prayer-meta">
+                    <span>Doa Pagi</span>
+                    <div class="prayer-actions">
+                        <button class="prayer-action" title="Bagikan">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doa Masuk Masjid -->
+            <div class="prayer-card" data-category="other">
+                <h3 class="prayer-title">
+                    <i class="fas fa-mosque"></i>
+                    Doa Masuk Masjid
+                </h3>
+                <div class="prayer-text">
+                    اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ
+                </div>
+                <div class="prayer-translation">
+                    "Ya Allah, bukakanlah untukku pintu-pintu rahmat-Mu." (HR. Muslim)
+                </div>
+                <div class="prayer-meta">
+                    <span>Doa Umum</span>
+                    <div class="prayer-actions">
+                        <button class="prayer-action" title="Bagikan">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doa Sebelum Makan -->
+            <div class="prayer-card" data-category="eating">
+                <h3 class="prayer-title">
+                    <i class="fas fa-utensils"></i>
+                    Doa Sebelum Makan
+                </h3>
+                <div class="prayer-text">
+                    اللَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ
+                </div>
+                <div class="prayer-translation">
+                    "Ya Allah, berkahilah kami dalam rezeki yang telah Engkau berikan kepada kami dan peliharalah kami dari siksa api neraka." (HR. Ibnu Majah)
+                </div>
+                <div class="prayer-meta">
+                    <span>Doa Makan</span>
+                    <div class="prayer-actions">
+                        <button class="prayer-action" title="Simpan">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                        <button class="prayer-action" title="Bagikan">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doa Tidur -->
+            <div class="prayer-card" data-category="sleeping">
+                <h3 class="prayer-title">
+                    <i class="fas fa-bed"></i>
+                    Doa Sebelum Tidur
+                </h3>
+                <div class="prayer-text">
+                    بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي وَبِكَ أَرْفَعُهُ، إِنْ أَمْسَكْتَ نَفْسِي فَاغْفِرْ لَهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِينَ
+                </div>
+                <div class="prayer-translation">
+                    "Dengan nama-Mu, ya Rabb-ku, aku meletakkan lambungku, dan dengan-Mu aku mengangkatnya. Jika Engkau menahan jiwaku (mewafatkanku), maka ampunilah ia. Dan jika Engkau melepaskannya (membiarkannya hidup), maka peliharalah ia sebagaimana Engkau memelihara hamba-hamba-Mu yang shalih." (HR. Bukhari-Muslim)
+                </div>
+                <div class="prayer-meta">
+                    <span>Doa Tidur</span>
+                    <div class="prayer-actions">
+                        <button class="prayer-action" title="Simpan">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                        <button class="prayer-action" title="Bagikan">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doa Keluar Rumah -->
+            <div class="prayer-card" data-category="travel">
+                <h3 class="prayer-title">
+                    <i class="fas fa-home"></i>
+                    Doa Keluar Rumah
+                </h3>
+                <div class="prayer-text">
+                    بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ، لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ
+                </div>
+                <div class="prayer-translation">
+                    "Dengan nama Allah, aku bertawakal kepada Allah, tiada daya dan upaya kecuali dengan pertolongan Allah." (HR. Abu Dawud)
+                </div>
+                <div class="prayer-meta">
+                    <span>Doa Bepergian</span>
+                    <div class="prayer-actions">
+                        <button class="prayer-action" title="Simpan">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                        <button class="prayer-action" title="Bagikan">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doa Pagi -->
+            <div class="prayer-card" data-category="morning">
+                <h3 class="prayer-title">
+                    <i class="fas fa-sunrise"></i>
+                    Doa Pagi Hari
+                </h3>
+                <div class="prayer-text">
+                    اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ
+                </div>
+                <div class="prayer-translation">
+                    "Ya Allah, dengan-Mu kami memasuki waktu pagi, dengan-Mu kami memasuki waktu petang, dengan-Mu kami hidup, dengan-Mu kami mati, dan kepada-Mu kami dibangkitkan." (HR. Tirmidzi)
+                </div>
+                <div class="prayer-meta">
+                    <span>Doa Pagi</span>
+                    <div class="prayer-actions">
+                        <button class="prayer-action" title="Simpan">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                        <button class="prayer-action" title="Bagikan">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doa Petang -->
+            <div class="prayer-card" data-category="evening">
+                <h3 class="prayer-title">
+                    <i class="fas fa-moon"></i>
+                    Doa Petang Hari
+                </h3>
+                <div class="prayer-text">
+                    اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ
+                </div>
+                <div class="prayer-translation">
+                    "Ya Allah, dengan-Mu kami memasuki waktu petang, dengan-Mu kami memasuki waktu pagi, dengan-Mu kami hidup, dengan-Mu kami mati, dan kepada-Mu kami kembali." (HR. Tirmidzi)
+                </div>
+                <div class="prayer-meta">
+                    <span>Doa Petang</span>
+                    <div class="prayer-actions">
+                        <button class="prayer-action" title="Simpan">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                        <button class="prayer-action" title="Bagikan">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Bottom Navigation -->
+    <nav class="bottom-nav" id="bottomNav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </a>
+        <a href="kitab-hadist.html" class="nav-item">
+            <i class="fas fa-book"></i>
+            <span>Kitab</span>
+        </a>
+        <a href="favorite-hadist.html" class="nav-item">
+            <i class="fas fa-heart"></i>
+            <span>Favorit</span>
+        </a>
+        <a href="profil-hadist.html" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profil</span>
+        </a>
+    </nav>
+
+    <script>
+        // Fungsi untuk toggle tema gelap
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const icon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                }
+            });
+        }
+
+        // Fungsi untuk bottom navigation
+        function setupBottomNav() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            
+            navItems.forEach(item => {
+                const itemHref = item.getAttribute('href').split('/').pop();
+                
+                // Set active class based on current page
+                if (itemHref === currentPage) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        // Fungsi untuk hide/show footer saat scroll
+        function setupScrollBehavior() {
+            const bottomNav = document.getElementById('bottomNav');
+            let lastScrollPosition = 0;
+            const scrollThreshold = 5;
+            
+            window.addEventListener('scroll', function() {
+                const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (currentScrollPosition > lastScrollPosition && currentScrollPosition > scrollThreshold) {
+                    bottomNav.classList.add('hidden');
+                } 
+                else if (currentScrollPosition < lastScrollPosition) {
+                    bottomNav.classList.remove('hidden');
+                }
+                
+                lastScrollPosition = currentScrollPosition <= 0 ? 0 : currentScrollPosition;
+            });
+        }
+
+        // Fungsi untuk filter doa berdasarkan kategori
+        function setupCategoryFilter() {
+            const tabs = document.querySelectorAll('.category-tab');
+            const prayerCards = document.querySelectorAll('.prayer-card');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    // Filter prayer cards
+                    prayerCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Fungsi untuk bookmark doa
+        function setupBookmark() {
+            document.querySelectorAll('.prayer-action').forEach(button => {
+                if (button.querySelector('.fa-bookmark')) {
+                    button.addEventListener('click', function() {
+                        const icon = this.querySelector('i');
+                        if (icon.classList.contains('far')) {
+                            icon.classList.replace('far', 'fas');
+                            icon.style.color = 'var(--accent)';
+                            // Tambahkan logika penyimpanan ke favorite di sini
+                        } else {
+                            icon.classList.replace('fas', 'far');
+                            icon.style.color = '';
+                            // Tambahkan logika penghapusan dari favorite di sini
+                        }
+                    });
+                }
+            });
+        }
+
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            setupThemeToggle();
+            setupBottomNav();
+            setupScrollBehavior();
+            setupCategoryFilter();
+            setupBookmark();
+        });
+    </script>
+</body>
+</html>

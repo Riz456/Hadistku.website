@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspirasi Jumat - HaditsKu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="website icon" type="png" href="alquran.png">
+    <style>
+        :root {
+            --primary: #0d6e6e;
+            --primary-light: rgba(13, 110, 110, 0.1);
+            --primary-dark: #0a4f4f;
+            --secondary: #d6ccb5;
+            --accent: #f5c361;
+            --dark: #1e2a3a;
+            --light: #f8f8f6;
+            --gray: #718096;
+            --jumat: #2b5876;
+            
+            /* Dark mode variables */
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #e0e0e0;
+            --dark-border: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            padding-bottom: 80px;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+         /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode .header {
+            background-color: var(--dark-card);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-3px);
+        }
+
+        .page-title {
+            flex: 1;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        body.dark-mode .page-title {
+            color: var(--secondary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.1rem;
+            margin-left: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .theme-toggle {
+            color: var(--dark-text);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            color: var(--accent);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Day Check Card */
+        .day-check {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .day-check {
+            background-color: var(--dark-card);
+            border-color: var(--dark-border);
+        }
+
+        .day-check::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--jumat), #4e4376);
+        }
+
+        .day-icon {
+            font-size: 2.2rem;
+            color: var(--jumat);
+            margin-bottom: 10px;
+        }
+
+        .day-title {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        body.dark-mode .day-title {
+            color: var(--dark-text);
+        }
+
+        .day-date {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* Card Design */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .card {
+            background-color: var(--dark-card);
+            border-color: var(--dark-border);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-right: 12px;
+        }
+
+        body.dark-mode .card-icon {
+            background-color: rgba(13, 110, 110, 0.2);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        body.dark-mode .card-title {
+            color: var(--dark-text);
+        }
+
+        /* Ayat Card */
+        .ayat-card .card-content {
+            font-family: 'Amiri', serif;
+            font-size: 1.6rem;
+            line-height: 1.8;
+            text-align: right;
+            direction: rtl;
+            margin-bottom: 15px;
+            padding: 10px 0;
+        }
+
+        .translation {
+            font-size: 0.95rem;
+            text-align: left;
+            direction: ltr;
+            color: var(--gray);
+            padding-top: 15px;
+            border-top: 1px dashed var(--light-gray);
+        }
+
+        body.dark-mode .translation {
+            color: var(--dark-text);
+            border-top-color: var(--dark-border);
+        }
+
+        .reference {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+
+        body.dark-mode .reference {
+            color: var(--secondary);
+        }
+
+        /* Share Button */
+        .share-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        body.dark-mode .share-btn {
+            color: var(--secondary);
+        }
+
+        /* Not Friday Message */
+        .waiting-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.03);
+            margin-top: 20px;
+        }
+
+        body.dark-mode .waiting-container {
+            background-color: var(--dark-card);
+            border-color: var(--dark-border);
+        }
+
+        .waiting-icon {
+            font-size: 3rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .waiting-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        body.dark-mode .waiting-title {
+            color: var(--dark-text);
+        }
+
+        .waiting-text {
+            font-size: 0.95rem;
+            color: var(--gray);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .countdown {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            background-color: var(--primary-light);
+            padding: 10px 15px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        body.dark-mode .countdown {
+            color: var(--secondary);
+            background-color: rgba(214, 204, 181, 0.1);
+        }
+
+        /* Floating Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 30px);
+            max-width: 400px;
+            background-color: white;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 5px;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.03), 0 6px 18px rgba(0,0,0,0.1);
+            z-index: 90;
+            transition: transform 0.3s ease;
+        }
+
+        body.dark-mode .bottom-nav {
+            background-color: var(--dark-card);
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1), 0 6px 18px rgba(0,0,0,0.2);
+        }
+
+        .bottom-nav.hidden {
+            transform: translateX(-50%) translateY(calc(100% + 20px));
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.7rem;
+            padding: 6px 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item i {
+            font-size: 1.15rem;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .nav-item.active i {
+            transform: scale(1.1);
+        }
+
+        /* Responsive Adjustments */
+        @media (min-width: 400px) {
+            .main {
+                padding: 20px;
+            }
+            
+            .content-grid {
+                gap: 20px;
+            }
+            
+            .ayat-card .card-content {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (min-width: 500px) {
+            .content-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .wide-card {
+                grid-column: span 2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="page-title">Inspirasi Jumat</div>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Day Check Card -->
+        <div class="day-check">
+            <div class="day-icon">
+                <i class="fas fa-calendar-alt" id="dayIcon"></i>
+            </div>
+            <h2 class="day-title" id="dayTitle">Memeriksa hari...</h2>
+            <p class="day-date" id="dayDate"></p>
+        </div>
+
+        <!-- Friday Content -->
+        <div id="jumatContent">
+            <div class="content-grid">
+                <!-- Ayat Card -->
+                <div class="card ayat-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-quran"></i>
+                        </div>
+                        <h3 class="card-title">Ayat Pilihan</h3>
+                    </div>
+                    <div class="card-content">
+                        قُلْ بِفَضْلِ ٱللَّهِ وَبِرَحْمَتِهِۦ فَبِذَٰلِكَ فَلْيَفْرَحُوا۟ هُوَ خَيْرٌۭ مِّمَّا يَجْمَعُونَ
+                    </div>
+                    <div class="translation">
+                        "Katakanlah: 'Dengan karunia Allah dan rahmat-Nya, hendaklah dengan itu mereka bergembira. Karunia Allah dan rahmat-Nya itu adalah lebih baik dari apa yang mereka kumpulkan.'"
+                    </div>
+                    <div class="reference">
+                        <span>QS. Yunus: 58</span>
+                        <button class="share-btn" onclick="shareContent('Ayat QS. Yunus: 58')">
+                            <i class="fas fa-share-alt"></i> Bagikan
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hadits Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3 class="card-title">Hadits Hari Ini</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Barangsiapa membaca surat Al-Kahfi pada hari Jumat, maka akan dipancarkan cahaya untuknya di antara dua Jumat.</p>
+                    </div>
+                    <div class="reference">
+                        <span>HR. Al-Hakim</span>
+                        <button class="share-btn" onclick="shareContent('Hadits tentang keutamaan membaca Al-Kahfi di hari Jumat')">
+                            <i class="fas fa-share-alt"></i> Bagikan
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Amalan Card -->
+                <div class="card wide-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-hands-praying"></i>
+                        </div>
+                        <h3 class="card-title">Amalan Jumat</h3>
+                    </div>
+                    <div class="card-content">
+                        <ol style="text-align: left; padding-left: 20px;">
+                            <li>Memperbanyak shalawat</li>
+                            <li>Membaca surat Al-Kahfi</li>
+                            <li>Mandi Jumat</li>
+                            <li>Memakai wewangian</li>
+                            <li>Shalat Jumat berjamaah</li>
+                        </ol>
+                    </div>
+                    <div style="text-align: right; margin-top: 15px;">
+                        <button class="share-btn" onclick="shareContent('Amalan-amalan sunnah di hari Jumat')">
+                            <i class="fas fa-share-alt"></i> Bagikan
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quote Card -->
+                <div class="card wide-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <h3 class="card-title">Kata Mutiara</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>"Jumat adalah hari yang istimewa. Perbanyaklah amal shaleh dan jadikan momentum untuk evaluasi diri."</p>
+                        <p style="text-align: right; margin-top: 10px; font-style: italic;">- Ustadz Abdullah</p>
+                    </div>
+                    <div style="text-align: right; margin-top: 15px;">
+                        <button class="share-btn" onclick="shareContent('Kata mutiara tentang hari Jumat')">
+                            <i class="fas fa-share-alt"></i> Bagikan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Waiting for Friday Content -->
+        <div class="waiting-container" id="waitingContent">
+            <div class="waiting-icon">
+                <i class="far fa-clock"></i>
+            </div>
+            <h3 class="waiting-title">Menunggu Hari Jumat</h3>
+            <p class="waiting-text">
+                Konten inspirasi khusus Jumat hanya tersedia pada hari Jumat.<br>
+                Kembali lagi di hari Jumat untuk mendapatkan ayat, hadits, dan nasihat khusus tentang keutamaan hari Jumat.
+            </p>
+            <div class="countdown" id="countdown"></div>
+        </div>
+    </main>
+
+    <script>
+        // Fungsi untuk toggle tema gelap
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const icon = themeToggle.querySelector('i');
+            
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                }
+            });
+        }
+
+        // Fungsi untuk bottom navigation
+        function setupBottomNav() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            
+            navItems.forEach(item => {
+                const itemHref = item.getAttribute('href').split('/').pop();
+                
+                if (itemHref === currentPage) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        // Fungsi untuk hide/show footer saat scroll
+        function setupScrollBehavior() {
+            const bottomNav = document.getElementById('bottomNav');
+            let lastScrollPosition = 0;
+            const scrollThreshold = 5;
+            
+            window.addEventListener('scroll', function() {
+                const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (currentScrollPosition > lastScrollPosition && currentScrollPosition > scrollThreshold) {
+                    bottomNav.classList.add('hidden');
+                } 
+                else if (currentScrollPosition < lastScrollPosition) {
+                    bottomNav.classList.remove('hidden');
+                }
+                
+                lastScrollPosition = currentScrollPosition <= 0 ? 0 : currentScrollPosition;
+            });
+        }
+
+        // Fungsi untuk share konten
+        function shareContent(contentTitle) {
+            const text = `${contentTitle} - Dapatkan inspirasi Jumat berkah di aplikasi HaditsKu`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Inspirasi Jumat',
+                    text: text,
+                    url: window.location.href
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                    fallbackShare(text);
+                });
+            } else {
+                fallbackShare(text);
+            }
+        }
+
+        // Fallback untuk browser yang tidak support Web Share API
+        function fallbackShare(text) {
+            // Copy ke clipboard
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Teks telah disalin ke clipboard, bagikan melalui aplikasi lain');
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+                prompt('Salin teks berikut untuk dibagikan:', text);
+            });
+        }
+
+        // Fungsi untuk memeriksa hari Jumat
+        function checkJumatDay() {
+            const now = new Date();
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const dayName = days[now.getDay()];
+            const isJumat = (now.getDay() === 5); // 5 = Jumat
+            
+            // Tampilkan tanggal
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('dayDate').textContent = now.toLocaleDateString('id-ID', options);
+            
+            if (isJumat) {
+                document.getElementById('dayTitle').textContent = 'Hari Jumat';
+                document.getElementById('dayIcon').className = 'fas fa-star';
+                document.getElementById('jumatContent').style.display = 'block';
+                document.getElementById('waitingContent').style.display = 'none';
+            } else {
+                document.getElementById('dayTitle').textContent = `Hari ${dayName}`;
+                document.getElementById('jumatContent').style.display = 'none';
+                document.getElementById('waitingContent').style.display = 'block';
+                
+                // Hitung hari menuju Jumat
+                let daysUntilJumat = (5 - now.getDay() + 7) % 7;
+                daysUntilJumat = daysUntilJumat === 0 ? 7 : daysUntilJumat;
+                
+                const countdownText = daysUntilJumat === 1 
+                    ? "Besok Jumat!" 
+                    : `${daysUntilJumat} hari menuju Jumat`;
+                
+                document.getElementById('countdown').textContent = countdownText;
+            }
+        }
+
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            setupThemeToggle();
+            setupBottomNav();
+            setupScrollBehavior();
+            checkJumatDay();
+        });
+    </script>
+</body>
+</html>
